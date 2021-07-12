@@ -1,0 +1,89 @@
+<div class="container-small bg-light pt-4" style="min-height: 100vh">
+  <div class="bg-light text-right py-3 h3">كودات الخصم</div>
+
+  <div class="border bg-white p-5 rounded">
+    <form action="" class="text-right" dir="rtl" [formGroup]="addDiscountForm">
+      <div class="row mx-0">
+        <mat-form-field class="col-md-3" appearance="outline" color="primary">
+          <mat-label>الكود </mat-label>
+          <input matInput required formControlName="code" maxlength="50" />
+          <mat-error
+            *ngIf="
+              addDiscountForm.controls.code.errors?.required &&
+              addDiscountForm.controls.code.touched
+            "
+          >
+            هذا الحقل مطلوب
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-3" appearance="outline">
+          <mat-label> النسبة (%) </mat-label>
+          <input
+            matInput
+            required
+            formControlName="percentage"
+            type="number"
+            min="0"
+            step="0.1"
+            max="100"
+          />
+          <mat-error
+            *ngIf="addDiscountForm.controls.percentage.hasError('min')"
+          >
+            قيمة النسبة تتراوح بين 0 - 100
+          </mat-error>
+          <mat-error
+            *ngIf="addDiscountForm.controls.percentage.hasError('max')"
+          >
+            قيمة النسبة تتراوح بين 0 - 100
+          </mat-error>
+          <mat-error
+            *ngIf="
+              addDiscountForm.controls.percentage.errors?.required &&
+              addDiscountForm.controls.percentage.touched
+            "
+          >
+            هذا الحقل مطلوب
+          </mat-error>
+        </mat-form-field>
+
+        <div class="col-md-2">
+          <button
+            class="btn py-2 px-3"
+            mat-button
+            color="warn"
+            mat-raised-button
+            (click)="addDiscount()"
+          >
+            إضافة كود الخصم
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-responsive mt-5 w-100" style="overflow: hidden">
+    <table class="table table-bordered bg-white" dir="rtl">
+      <thead class="text-center bg-grey">
+        <th>الكود</th>
+        <th>النسبة</th>
+
+        <th>الخيارات</th>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let discount of discounts">
+          <td>
+            {{ discount.code }}
+          </td>
+          <td>{{ discount.percentage }}</td>
+
+          <td>
+            <a (click)="deleteDiscountCode(discount.id)">
+              <i class="fa fa-trash fa-2x text-primary"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

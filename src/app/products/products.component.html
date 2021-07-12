@@ -1,0 +1,215 @@
+<div class="container-small bg-light pt-4" style="min-height: 100vh">
+  <div class="bg-light text-right py-3 h3">المنتجات</div>
+
+  <div class="border bg-white p-5 rounded">
+    <form action="" class="text-right" dir="rtl" [formGroup]="addProductForm">
+      <mat-form-field class="col-md-4" appearance="outline" color="primary">
+        <mat-label>اسم المنتج باللغة العربية </mat-label>
+        <input matInput required formControlName="productNameArabic" />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productNameArabic.errors?.required &&
+            addProductForm.controls.productNameArabic.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-4" appearance="outline">
+        <mat-label>اسم المنتج باللغة الإنجليزية </mat-label>
+        <input matInput required formControlName="productNameEnglish" />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productNameEnglish.errors?.required &&
+            addProductForm.controls.productNameEnglish.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-2" appearance="outline" class="mb-4">
+        <mat-label>الفئة </mat-label>
+        <mat-select formControlName="category" required>
+          <mat-option value="1">عروض </mat-option>
+          <mat-option value="2"> ملابس</mat-option>
+          <mat-option value="3"> ألعاب</mat-option>
+          <mat-option value="4">نثريات </mat-option>
+          <mat-option value="5">مستحضرات التجميل </mat-option>
+          <mat-option value="6">عطور </mat-option>
+          <mat-option value="7">نظارات </mat-option>
+          <mat-option value="8">إكسسورارت </mat-option>
+          <mat-option value="9">شنط ومحافظ </mat-option>
+          <mat-option value="10">ادوات منزلية </mat-option>
+          <mat-option value="11">أجهزة كهربائية </mat-option>
+          <mat-option value="12">الكترونيات </mat-option>
+          <mat-option value="13">هدايا </mat-option>
+          <mat-option value="14">ساعات </mat-option>
+          <mat-option value="15">مستلزمات أطفال </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.category.errors?.required &&
+            addProductForm.controls.category.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-2" appearance="outline">
+        <mat-label>سعر المنتج </mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="price"
+          min="0"
+        />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.price.errors?.required &&
+            addProductForm.controls.price.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-5" appearance="outline" color="primary">
+        <mat-label>وصف المنتج باللغة العربية </mat-label>
+        <input matInput required formControlName="productDescArabic" />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productDescArabic.errors?.required &&
+            addProductForm.controls.productDescArabic.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-5 mb-4" appearance="outline">
+        <mat-label>وصف المنتج باللغة الإنجليزية </mat-label>
+        <input matInput required formControlName="productDescEnglish" />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productDescEnglish.errors?.required &&
+            addProductForm.controls.productDescEnglish.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-2" appearance="outline">
+        <mat-label>الكمية </mat-label>
+        <input matInput required type="number" formControlName="count" />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.count.errors?.required &&
+            addProductForm.controls.count.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <div class="row mx-0">
+        <div class="col-md-1" *ngFor="let image of images">
+          <img
+            [src]="getImage(image)"
+            width="100%"
+            height="auto"
+            (click)="deleteImage(image)"
+          />
+        </div>
+        <div class="col-md-2 row mx-0 px-0">
+          <mat-form-field appearance="outline" class="col-11">
+            <mat-label>إضافة صورة </mat-label>
+            <ngx-mat-file-input
+              accept="image/*"
+              formControlName="image"
+              (change)="uploadImage($event)"
+            ></ngx-mat-file-input>
+            <mat-icon matSuffix
+              ><i class="fa fa-folder-open color-main" aria-hidden="true"></i>
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                addProductForm.controls.image.errors?.required &&
+                addProductForm.controls.image.touched
+              "
+            >
+              هذا الحقل مطلوب
+            </mat-error>
+          </mat-form-field>
+          <div class="text-right px-0 mt-3 pt-1 col-1">
+            <i class="fa fa-minus-circle text-danger"></i>
+          </div>
+        </div>
+        <!-- <div class="col-md-2">
+          <button
+            (click)="addImage()"
+            class="btn btn-outline-success"
+            style="margin-top: 4px; height: 53px"
+          >
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            إضافة صورة
+          </button>
+        </div> -->
+      </div>
+
+      <div class="col-12 mt-3">
+        <button
+          class="btn py-2 px-5"
+          mat-button
+          color="warn"
+          mat-raised-button
+          (click)="addProduct()"
+        >
+          إضافة المنتج
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-responsive mt-5 w-100" style="overflow: hidden">
+    <table class="table table-bordered bg-white" dir="rtl">
+      <thead class="text-center bg-grey">
+        <th>الفئة</th>
+        <th>اسم المنتج باللغة العربية</th>
+        <th>اسم المنتج باللغة الإنجليزية</th>
+
+        <th>السعر</th>
+        <th>الكمية</th>
+
+        <th>الخيارات</th>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let product of products">
+          <td>
+            {{ product.category }}
+          </td>
+          <td>{{ product.titleArabic }}</td>
+          <td>{{ product.titleEnglish }}</td>
+
+          <td>{{ product.price }}</td>
+          <td>{{ product.count }}</td>
+          <td>
+            <a
+              [routerLink]="['/edit-product-address']"
+              [queryParams]="{ id: product.id }"
+              rel="noopener noreferrer"
+            >
+              <i
+                class="fa fa-pencil-square-o mx-3 text-success"
+                aria-hidden="true"
+                routerLink="/edit-product-address"
+              ></i>
+            </a>
+            <a href="">
+              <i class="fa fa-trash text-primary"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

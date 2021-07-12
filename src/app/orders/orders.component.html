@@ -1,0 +1,122 @@
+<div class="container-small bg-light pt-4" style="min-height: 100vh">
+  <div class="bg-light text-right py-3 h3">الطلبات</div>
+
+  <div class="border bg-white p-5 rounded">
+    <form action="" class="" dir="rtl">
+      <div class="mx-0 rounded row justify-content-center">
+        <!-- <mat-form-field class="col-md-4" appearance="fill">
+          <mat-label>search job title or company ..</mat-label>
+          <input matInput required />
+          <mat-icon matSuffix
+            ><i class="fa fa-search color-main" aria-hidden="true"></i>
+          </mat-icon>
+        </mat-form-field> -->
+
+        <mat-form-field class="col-md-3" appearance="outline">
+          <mat-label>المحافظة</mat-label>
+          <mat-select>
+            <mat-option value="all">كافة المحافظات</mat-option>
+            <mat-option value="amman">عمان</mat-option>
+            <mat-option value="balqaa">البلقاء </mat-option>
+            <mat-option value="irbid"> إربد</mat-option>
+            <mat-option value="zarqaa">الزرقاء</mat-option>
+            <mat-option value="ma'an">معان </mat-option>
+            <mat-option value="tafela">الطفيلة </mat-option>
+            <mat-option value="aqaba">العقبة </mat-option>
+            <mat-option value="madaba">مادبا </mat-option>
+            <mat-option value="ajloon">عجلون </mat-option>
+            <mat-option value="jarash">جرش </mat-option>
+            <mat-option value="karak">كرك </mat-option>
+            <mat-option value="mafraq">مفرق </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-md-3">
+          <mat-label>الفئة </mat-label>
+          <mat-select formControlName="category" required>
+            <mat-option value="1">جميع الفئات </mat-option>
+
+            <mat-option value="1">عروض </mat-option>
+            <mat-option value="2"> ملابس</mat-option>
+            <mat-option value="3"> ألعاب</mat-option>
+            <mat-option value="4">نثريات </mat-option>
+            <mat-option value="5">مستحضرات التجميل </mat-option>
+            <mat-option value="6">عطور </mat-option>
+            <mat-option value="7">نظارات </mat-option>
+            <mat-option value="8">إكسسورارت </mat-option>
+            <mat-option value="9">شنط ومحافظ </mat-option>
+            <mat-option value="10">ادوات منزلية </mat-option>
+            <mat-option value="11">أجهزة كهربائية </mat-option>
+            <mat-option value="12">الكترونيات </mat-option>
+            <mat-option value="13">هدايا </mat-option>
+            <mat-option value="14">ساعات </mat-option>
+            <mat-option value="15">مستلزمات أطفال </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-md-3">
+          <mat-label> حالة الطلب</mat-label>
+          <mat-select>
+            <option value="all">كافة الحالات</option>
+            <mat-option value="PENDING">قيد الانتظار</mat-option>
+
+            <mat-option value="DELIVERED">تم استلامه</mat-option>
+            <mat-option value="PROCESSING">قيدالمتابعة</mat-option>
+            <mat-option value="SHIPPED">تم شحنه</mat-option>
+            <mat-option value="CANCELED">تم رفضه</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-md-3">
+          <mat-label>وقت الطلب </mat-label>
+          <mat-select>
+            <mat-option value="all">كافة الأوقات </mat-option>
+            <mat-option value="last24">آخر 24 ساعة </mat-option>
+            <mat-option value="lastWeek"> آخر أسبوع</mat-option>
+            <mat-option value="lastMonth"> آخر شهر</mat-option>
+            <!-- <mat-option value="anytime">anytime </mat-option> -->
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-responsive mt-5 w-100" style="overflow: hidden">
+    <table class="table table-bordered bg-white" dir="rtl">
+      <thead class="text-center bg-grey">
+        <th>اسم صاحب الطلب</th>
+        <th>تاريخ الطلب</th>
+        <th>حالة الطلب</th>
+
+        <th>المدينة</th>
+        <th>المجموع</th>
+
+        <th>الخيارات</th>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let order of orders">
+          <td>{{ order.name }}</td>
+
+          <td>{{ order.dateTime }}</td>
+          <td>{{ order.status }}</td>
+
+          <td>{{ order.city }}</td>
+          <td>{{ order.total }}</td>
+          <td>
+            <a
+              [routerLink]="['/edit-order-address']"
+              [queryParams]="{ id: order.id }"
+              rel="noopener noreferrer"
+            >
+              <i
+                class="fa fa-pencil-square-o mx-3 text-success"
+                aria-hidden="true"
+                routerLink="/edit-order-address"
+              ></i>
+            </a>
+            <a href="">
+              <i class="fa fa-trash text-primary"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
