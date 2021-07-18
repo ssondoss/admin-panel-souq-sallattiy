@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MessagesComponent } from './messages/messages.component';
     HomeComponent,
     DiscountsComponent,
     MessagesComponent,
+    ViewOrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,6 @@ import { MessagesComponent } from './messages/messages.component';
     MatSelectModule,
     MaterialFileInputModule,
     MatInputModule,
-
     AppRoutingModule,
   ],
   providers: [],

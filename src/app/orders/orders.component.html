@@ -4,15 +4,7 @@
   <div class="border bg-white p-5 rounded">
     <form action="" class="" dir="rtl">
       <div class="mx-0 rounded row justify-content-center">
-        <!-- <mat-form-field class="col-md-4" appearance="fill">
-          <mat-label>search job title or company ..</mat-label>
-          <input matInput required />
-          <mat-icon matSuffix
-            ><i class="fa fa-search color-main" aria-hidden="true"></i>
-          </mat-icon>
-        </mat-form-field> -->
-
-        <mat-form-field class="col-md-3" appearance="outline">
+        <!-- <mat-form-field class="col-md-3" appearance="outline">
           <mat-label>المحافظة</mat-label>
           <mat-select>
             <mat-option value="all">كافة المحافظات</mat-option>
@@ -29,10 +21,10 @@
             <mat-option value="karak">كرك </mat-option>
             <mat-option value="mafraq">مفرق </mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="col-md-3">
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline" class="col-md-3">
           <mat-label>الفئة </mat-label>
-          <mat-select formControlName="category" required>
+          <mat-select required>
             <mat-option value="1">جميع الفئات </mat-option>
 
             <mat-option value="1">عروض </mat-option>
@@ -51,8 +43,8 @@
             <mat-option value="14">ساعات </mat-option>
             <mat-option value="15">مستلزمات أطفال </mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="col-md-3">
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline" class="col-md-3">
           <mat-label> حالة الطلب</mat-label>
           <mat-select>
             <option value="all">كافة الحالات</option>
@@ -63,22 +55,44 @@
             <mat-option value="SHIPPED">تم شحنه</mat-option>
             <mat-option value="CANCELED">تم رفضه</mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="col-md-3">
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline" class="col-md-3">
           <mat-label>وقت الطلب </mat-label>
           <mat-select>
             <mat-option value="all">كافة الأوقات </mat-option>
             <mat-option value="last24">آخر 24 ساعة </mat-option>
             <mat-option value="lastWeek"> آخر أسبوع</mat-option>
             <mat-option value="lastMonth"> آخر شهر</mat-option>
-            <!-- <mat-option value="anytime">anytime </mat-option> -->
+
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="col-md-4 m-3">
+          <input type="date" class="form-control" name="" id="" #startDate />
+        </div>
+        <div class="col-md-4 m-3">
+          <input type="date" class="form-control" name="" id="" #endDate />
+        </div>
+        <div class="col-md-2 m-3">
+          <button
+            class="btn btn-primary w-100"
+            (click)="search(startDate.value, endDate.value)"
+          >
+            بحث
+          </button>
+        </div>
       </div>
     </form>
   </div>
-
-  <div class="table-responsive mt-5 w-100" style="overflow: hidden">
+  <div class="container" *ngIf="orders.length <= 0">
+    <div class="mt-3 bg-grey text-center">
+      <h3>لا يوجد عناصر</h3>
+    </div>
+  </div>
+  <div
+    class="table-responsive mt-5 w-100"
+    style="overflow: hidden"
+    *ngIf="orders.length > 0"
+  >
     <table class="table table-bordered bg-white" dir="rtl">
       <thead class="text-center bg-grey">
         <th>اسم صاحب الطلب</th>
@@ -94,24 +108,37 @@
         <tr *ngFor="let order of orders">
           <td>{{ order.name }}</td>
 
-          <td>{{ order.dateTime }}</td>
-          <td>{{ order.status }}</td>
+          <td>{{ order.dateTime | date: "M/d/yy, h:mm a" }}</td>
+          <td>
+            <mat-select
+              required
+              [(ngModel)]="order.status"
+              (ngModelChange)="changeStatus(order, $event)"
+              [disabled]="order.status == 'CANCELED'"
+            >
+              <mat-option [value]="'PENDING'">قيد الانتظار</mat-option>
+              <mat-option [value]="'PROCESSING'"> قيد التحضير</mat-option>
+              <mat-option [value]="'SHIPPED'"> قيد التوصيل</mat-option>
+              <mat-option [value]="'DELEVRED'">تم الاستلام </mat-option>
+              <mat-option
+                *ngIf="order.status == 'CANCELED'"
+                [value]="'CANCELED'"
+                >تم الغاء الطلب
+              </mat-option>
+            </mat-select>
+          </td>
 
           <td>{{ order.city }}</td>
           <td>{{ order.total }}</td>
           <td>
             <a
-              [routerLink]="['/edit-order-address']"
+              [routerLink]="['/view-order']"
               [queryParams]="{ id: order.id }"
               rel="noopener noreferrer"
             >
-              <i
-                class="fa fa-pencil-square-o mx-3 text-success"
-                aria-hidden="true"
-                routerLink="/edit-order-address"
-              ></i>
+              <i class="fa fa-eye mx-3 text-success" aria-hidden="true"></i>
             </a>
-            <a href="">
+            <a (click)="changeStatus(order, 'CANCELED')">
               <i class="fa fa-trash text-primary"></i>
             </a>
           </td>

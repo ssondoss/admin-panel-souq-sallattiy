@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-messages',
@@ -6,7 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.scss', '../app.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-  constructor() {}
+  orders: any;
+  allMassages: any;
+  constructor(private http: HttpClient) {
+    this.getAllMassages();
+  }
 
+  getAllMassages() {
+    this.http.get(environment.api + 'contact-message').subscribe((res: any) => {
+      this.allMassages = res;
+    });
+  }
+
+  delete(id: string) {
+    this.http
+      .delete(environment.api + 'contact-message/' + id)
+      .subscribe(() => {
+        this.getAllMassages();
+      });
+  }
   ngOnInit(): void {}
 }

@@ -1,1 +1,28 @@
-<p>messages works!</p>
+<div class="container-small bg-light pt-4" style="min-height: 100vh">
+  <div class="table-responsive mt-5 w-100" style="overflow: hidden">
+    <table class="table table-bordered bg-white" dir="rtl">
+      <thead class="text-center bg-grey">
+        <th>اسم المرسل</th>
+        <th>الاستفسار</th>
+        <th>رقم الهاتف</th>
+
+        <th>التاريخ و الوقت</th>
+
+        <th>الخيارات</th>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let message of allMassages">
+          <td>{{ message.name }}</td>
+          <td>{{ message.message }}</td>
+          <td>{{ message.phone }}</td>
+          <td>{{ message.dateTime | date: "M/d/yy, h:mm a" }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="delete(message.id)">
+              تم الحل
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

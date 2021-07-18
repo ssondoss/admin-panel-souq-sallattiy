@@ -30,22 +30,22 @@
 
       <mat-form-field class="col-md-2" appearance="outline" class="mb-4">
         <mat-label>الفئة </mat-label>
-        <mat-select formControlName="category" required>
-          <mat-option value="1">عروض </mat-option>
-          <mat-option value="2"> ملابس</mat-option>
-          <mat-option value="3"> ألعاب</mat-option>
-          <mat-option value="4">نثريات </mat-option>
-          <mat-option value="5">مستحضرات التجميل </mat-option>
-          <mat-option value="6">عطور </mat-option>
-          <mat-option value="7">نظارات </mat-option>
-          <mat-option value="8">إكسسورارت </mat-option>
-          <mat-option value="9">شنط ومحافظ </mat-option>
-          <mat-option value="10">ادوات منزلية </mat-option>
-          <mat-option value="11">أجهزة كهربائية </mat-option>
-          <mat-option value="12">الكترونيات </mat-option>
-          <mat-option value="13">هدايا </mat-option>
-          <mat-option value="14">ساعات </mat-option>
-          <mat-option value="15">مستلزمات أطفال </mat-option>
+        <mat-select formControlName="category" required [(ngModel)]="category">
+          <mat-option [value]="1">عروض </mat-option>
+          <mat-option [value]="2"> ملابس</mat-option>
+          <mat-option [value]="3"> ألعاب</mat-option>
+          <mat-option [value]="4">نثريات </mat-option>
+          <mat-option [value]="5">مستحضرات التجميل </mat-option>
+          <mat-option [value]="6">عطور </mat-option>
+          <mat-option [value]="7">نظارات </mat-option>
+          <mat-option [value]="8">إكسسورارت </mat-option>
+          <mat-option [value]="9">شنط ومحافظ </mat-option>
+          <mat-option [value]="10">ادوات منزلية </mat-option>
+          <mat-option [value]="11">أجهزة كهربائية </mat-option>
+          <mat-option [value]="12">الكترونيات </mat-option>
+          <mat-option [value]="13">هدايا </mat-option>
+          <mat-option [value]="14">ساعات </mat-option>
+          <mat-option [value]="15">مستلزمات أطفال </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
@@ -74,7 +74,25 @@
           هذا الحقل مطلوب
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col-md-5" appearance="outline" color="primary">
+      <mat-form-field class="col-md-2" appearance="outline">
+        <mat-label>الرف </mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="wardrobe"
+          min=""
+        />
+        <mat-error
+          *ngIf="
+            addProductForm.controls.wardrobe.errors?.required &&
+            addProductForm.controls.wardrobe.touched
+          "
+        >
+          هذا الحقل مطلوب
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-md-4" appearance="outline" color="primary">
         <mat-label>وصف المنتج باللغة العربية </mat-label>
         <input matInput required formControlName="productDescArabic" />
         <mat-error
@@ -86,7 +104,7 @@
           هذا الحقل مطلوب
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col-md-5 mb-4" appearance="outline">
+      <mat-form-field class="col-md-4 mb-4" appearance="outline">
         <mat-label>وصف المنتج باللغة الإنجليزية </mat-label>
         <input matInput required formControlName="productDescEnglish" />
         <mat-error
@@ -100,7 +118,13 @@
       </mat-form-field>
       <mat-form-field class="col-md-2" appearance="outline">
         <mat-label>الكمية </mat-label>
-        <input matInput required type="number" formControlName="count" />
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="count"
+          min="1"
+        />
         <mat-error
           *ngIf="
             addProductForm.controls.count.errors?.required &&
@@ -158,6 +182,7 @@
 
       <div class="col-12 mt-3">
         <button
+          *ngIf="!edit"
           class="btn py-2 px-5"
           mat-button
           color="warn"
@@ -165,6 +190,28 @@
           (click)="addProduct()"
         >
           إضافة المنتج
+        </button>
+
+        <button
+          *ngIf="edit"
+          class="btn py-2 px-5"
+          mat-button
+          color="warn"
+          mat-raised-button
+          (click)="updateProduct()"
+        >
+          تحديث المنتج
+        </button>
+
+        <button
+          *ngIf="edit"
+          class="btn mx-2 py-2 px-5"
+          mat-button
+          color="warn"
+          mat-raised-button
+          (click)="clearInputs()"
+        >
+          الغاء
         </button>
       </div>
     </form>
@@ -179,6 +226,7 @@
 
         <th>السعر</th>
         <th>الكمية</th>
+        <th>الرف</th>
 
         <th>الخيارات</th>
       </thead>
@@ -192,6 +240,7 @@
 
           <td>{{ product.price }}</td>
           <td>{{ product.count }}</td>
+          <td>{{ product.wardrobe }}</td>
           <td>
             <a
               [routerLink]="['/edit-product-address']"
@@ -201,7 +250,7 @@
               <i
                 class="fa fa-pencil-square-o mx-3 text-success"
                 aria-hidden="true"
-                routerLink="/edit-product-address"
+                (click)="editProduct(product)"
               ></i>
             </a>
             <a href="">
