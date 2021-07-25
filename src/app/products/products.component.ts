@@ -184,4 +184,10 @@ export class ProductsComponent implements OnInit {
     });
     this.edit = false;
   }
+
+  deleteProduct(id: string) {
+    this.http.delete(environment.api + 'product/' + id).subscribe(() => {
+      this.getProducts();
+    });
+  }
 }
