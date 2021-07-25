@@ -47,7 +47,7 @@ export class ProductsComponent implements OnInit {
     formData.append('file', fileList[0], fileList[0].name);
     if (fileList.length > 0) {
       this.http
-        .post(environment.api + '/images/upload?exe=' + exe, formData)
+        .post(environment.api + 'images/upload?exe=' + exe, formData)
         .subscribe(
           (res: any) => {
             console.log(res);
