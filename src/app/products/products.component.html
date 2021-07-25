@@ -255,9 +255,9 @@
                 (click)="editProduct(product)"
               ></i>
             </a>
-            <a href="">
-              <i class="fa fa-trash text-primary"></i>
-            </a>
+            <span >
+              <i class="fa fa-trash text-primary" (click)="deleteProduct(product.id)" ></i>
+            </span>
           </td>
         </tr>
       </tbody>
