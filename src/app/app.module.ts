@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ViewOrderComponent } from './view-order/view-order.component';
     DiscountsComponent,
     MessagesComponent,
     ViewOrderComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

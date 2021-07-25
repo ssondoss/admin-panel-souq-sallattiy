@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -12,8 +12,12 @@ export class ViewOrderComponent implements OnInit {
   order: any;
   constructor(
     private activatedRouter: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    router: Router
   ) {
+    if (localStorage.getItem('adminIsLoggedIn') == null) {
+      router.navigate(['/login']);
+    }
     activatedRouter.queryParams.subscribe((params) => {
       this.http
         .get(environment.api + 'order/' + params['id'])

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -11,7 +12,15 @@ import { environment } from 'src/environments/environment';
 export class OrdersComponent implements OnInit {
   orders: any;
   realOrders: any;
-  constructor(public formBuilder: FormBuilder, private http: HttpClient) {
+
+  constructor(
+    public formBuilder: FormBuilder,
+    private http: HttpClient,
+    router: Router
+  ) {
+    if (localStorage.getItem('adminIsLoggedIn') == null) {
+      router.navigate(['/login']);
+    }
     this.getAllOrders();
   }
   ngOnInit(): void {}
